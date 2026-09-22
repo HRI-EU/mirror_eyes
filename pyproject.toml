@@ -1,0 +1,63 @@
+[project]
+name = "mirror-eyes"
+version = "0.1.0"
+description = "2D eye model with a mirror overlay to reflect areas of interest"
+readme = "README.md"
+requires-python = "==3.10.18"
+dependencies = [
+    "cameramodels>=0.2.13",
+    "mediapipe==0.10.7",
+    "numpy==1.26.1",
+    "opencv-contrib-python==4.8.1.78",
+    "opencv-python==4.8.1.78",
+    "ruff>=0.12.12",
+    "screeninfo==0.8.1",
+    "setuptools<82",
+    "typing-extensions==4.16.0",
+]
+
+[project.scripts]
+mirror_eyes = "mirror_eyes_app.app:main"
+
+[tool.ruff]
+required-version = ">=0.11.2"
+line-length = 120
+extend-exclude = ["venv", "tests"]
+force-exclude = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # ruff-specific rules
+    "RUF",
+]
+
+ignore = [
+    "SIM102",  # allow nested ifs for readability
+    "RUF009",  # allow function calls in dataclass default for config while in p3.10
+]
+
+
+[tool.ruff.lint.flake8-bugbear]
+# Allow default arguments with custom types
+extend-immutable-calls = ["mirror_eyes.custom_types.Extents", "mirror_eyes.custom_types.Limits", "mirror_eyes.custom_types.ScreenPoint"]
+
+[tool.mypy]
+python_version = "3.10"
